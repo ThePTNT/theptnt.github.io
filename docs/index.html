@@ -1,79 +1,112 @@
- <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>ThePTNT.github.io</title>
-<style>
-body {
- background-color: #4a3ab5;
-}
-h1   {
- color: #411dad;
- font-family: monospace;
- font-size: 50px
-}
-p    {
- color: #3a7cb5;
- font-family: monospace;
- font-size: 20px
-}
-a    {
- color: #4b98db;
- font-family: monospace;
- font-size: 20px
-}
-marquee    {
- color: #8ecc6c;
- font-family: monospace;
- font-size: 20px
-}
-</style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;1,500&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>THEPTNT</title>
+  <style>
+    body {
+      font-family: "Noto Sans", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 500;
+      font-style: normal;
+      font-variation-settings: "wdth" 100;
+      text-align: center;
+      padding-top: 100px;
+      background: #d1caca;
+    }
+
+    h1 {
+      font-size: 3rem;
+      min-height: 3.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .cursor::after {
+      content: "|";
+    }
+
+    .blinking::after {
+      animation: blink 1s step-start infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
 </head>
 <body>
- <h1>welcome</h1>
- <p>i put code and conlangs up here sometimes</p>
- <a style="text-decoration:none" href="https://theptnt.github.io/ponbodb">[conlang] pon bo - a minimalist conlang inspired by toki pona (unfinished!)</a><br><br>
- <a style="text-decoration:none" href="https://theptnt.github.io/untitledInterlang">[conlang] untitled interlang - an interlang, partially inspired by esperanto (but not a clone)</a><br><br>
- <a style="text-decoration:none" href="https://theptnt.github.io/ipaddressestimator/">[code] ip address estimator - estimates an ip address location</a><br><br>
- <a style="text-decoration:none" href="https://theptnt.github.io/oreconvert/">[code] minecraft ore converter - converts between minecraft ore values using statistics (how many diamonds are there per chunk, etc)</a>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <br>
- <marquee dir="ltr">discord: @theptnt</marquee>
- <marquee dir="ltr">youtube: @glottalplosive (with discord @stellarr_x)</marquee>
- <script type="module">
-    import { emojiCursor } from "https://unpkg.com/cursor-effects@latest/dist/esm.js";
+  <h2>theptnt.github.io</h2>
+  <h2 id="welcome-title" class="cursor"></h2>
+  <p>stuff coming soon</p>
+
+  <script>
+    const titles = [
+      "Welcome!", "ようこそ!", "Karibu!", "Bienvenue!", "Selamat datang!", "ברוך הבא!", "Miredita!", "환영합니다!",
+      "Halo!", "Bine ați venit!", "Chào mừng!", "Wamukelekile!", "Kama pona!", "Üdvözöljük!", "Shalom!",
+      "Tanshi!", "Velkomin!", "Nnọọ!", "Talofa!", "Akwaaba!", "Добро пожаловать!", "Kamusta!", "Bonvenon!",
+      "As-salāmu ʿalaykum!", "Benvenuto!", "Yá'át'ééh!", "Bula!", "Salve!", "Välkommen!", "Rea u amohela!",
+      "Bienvenido!", "Velkommen!", "स्वागत है!", "Willkommen!", "မင်္ဂလာပါ!", "Dobrodošli!", "ਕਿਰਪਾ ਕਰਕੇ ਆਉਣ!",
+      "Barka da zuwa!", "Καλώς ήρθατε!", "Kwa heri!", "χαῖρε!", "வணக்கம்!", "Welkom!"
+    ];
   
-    new emojiCursor({ emoji: ["ʔ"] });
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+  
+    const titleEl = document.getElementById("welcome-title");
+    let index = 0;
+  
+    function typeText(text, onComplete) {
+      titleEl.classList.remove("blinking");
+      let i = 0;
+      function type() {
+        if (i <= text.length) {
+          titleEl.textContent = text.slice(0, i);
+          i++;
+          setTimeout(type, 100);
+        } else {
+          titleEl.classList.add("blinking");
+          setTimeout(onComplete, 2500);
+        }
+      }
+      type();
+    }
+  
+    function deleteText(onComplete) {
+      titleEl.classList.remove("blinking");
+      let text = titleEl.textContent;
+      let i = text.length;
+      function erase() {
+        if (i >= 0) {
+          titleEl.textContent = text.slice(0, i);
+          i--;
+          setTimeout(erase, 50);
+        } else {
+          setTimeout(onComplete, 300);
+        }
+      }
+      erase();
+    }
+  
+    function loop() {
+      typeText(titles[index], () => {
+        deleteText(() => {
+          index = (index + 1) % titles.length;
+          loop();
+        });
+      });
+    }
+  
+    shuffle(titles);
+    window.onload = loop;
   </script>
+  
 </body>
-</html> 
+</html>
